@@ -1,0 +1,65 @@
+#! /bin/bash 
+#######################################################################################################
+# Author: Justin McAfee 									      #
+# Contact: me@justinmcafee.com									      #
+# Purpose:											      #
+# Date:												      #
+# Revision: 0											      #
+#######################################################################################################
+
+checkroot(){
+if [ $(whoami) != root ]; then
+	printf "Please re-run with sudo.\n"
+	exit 
+fi
+}
+
+errorcheck(){
+if [ $? -ne 0 ];then
+	printf " An error was encountered\n"
+	exit
+fi
+return
+}
+
+aptupdate(){
+apt autoremove -y && apt autoclean -y && apt update && apt upgrade -y 
+errorcheck
+
+}
+
+installapps(){
+apt install docker docker-compose
+errorcheck
+}
+
+cloneproxy(){
+git clone https://github.com/signalapp/Signal-TLS-Proxy.git
+errorcheck
+    }
+
+configureTLS(){
+cd Signal-TLS-Proxy
+errorcheck
+./init-certificate.sh
+errorcheck
+    }
+
+dockerCompose(){
+docker-compose up --detach
+}
+
+Finished(){
+printf "All apps installed successfully.\n"
+printf "\n Congratulations, Your proxy is now running! You can share your proxy with friends and family using this URL format:
+https://signal.tube/#<your_domain_name>/n"
+}
+
+checkroot
+aptupdate
+installapps
+cloneproxy
+configureTLS
+dockerCompose
+Finished
+
