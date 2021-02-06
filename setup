@@ -2,9 +2,9 @@
 #######################################################################################################
 # Author: Justin McAfee 									      #
 # Contact: me@justinmcafee.com									      #
-# Purpose:											      #
-# Date:												      #
-# Revision: 0											      #
+# Purpose: To configure a Signal Proxy with minimal interaction					      #
+# Date:	 5FEB2021							      #
+# Revision: 01											      #
 #######################################################################################################
 
 checkroot(){
