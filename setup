@@ -70,5 +70,6 @@ installapps
 cloneproxy
 configureTLS
 dockerCompose
+configureUFW
 Finished
 
