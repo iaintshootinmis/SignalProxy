@@ -3,9 +3,10 @@
 # Author: Justin McAfee 									      #
 # Contact: me@justinmcafee.com									      #
 # Purpose: To configure a Signal Proxy with minimal interaction					      #
-# Date:	 5FEB2021							      #
+# Date:	 5FEB2021										      #
 # Revision: 01											      #
 #######################################################################################################
+ip=YourPublicIPAddress
 
 checkroot(){
 if [ $(whoami) != root ]; then
@@ -29,7 +30,7 @@ errorcheck
 }
 
 installapps(){
-apt install docker docker-compose
+apt install -y docker docker-compose
 errorcheck
 }
 
@@ -49,6 +50,14 @@ dockerCompose(){
 docker-compose up --detach
 }
 
+configureUFW(){
+ufw allow from any to any port 80
+ufw allow from any to any port 443
+ufw allow from $ip to any port 22 
+ufw deny from any to any
+ufw enable 
+ufw status verbose
+}
 Finished(){
 printf "All apps installed successfully.\n"
 printf "\n Congratulations, Your proxy is now running! You can share your proxy with friends and family using this URL format:
